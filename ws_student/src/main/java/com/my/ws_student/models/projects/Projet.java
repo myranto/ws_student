@@ -149,4 +149,77 @@ public class Projet extends ObjectBDD {
     private void init(Projet p) throws Exception {
         p.getList_tache();
     }
+
+  public double getTachesTermineesPourcentage(int idProject) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double pourcentage = 0;
+        try {
+            con = Connexion.getConnection();
+            String query = "SELECT COUNT(DISTINCT idTache) FILTER (WHERE etat = 1) * 100.0 / COUNT(DISTINCT idTache) AS pourcentage_tache FROM Tache WHERE ProjetidProjet =?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idProject);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                pourcentage = rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return pourcentage;
+    }
+
+    public List<Projet> rechercheParMotCle(String motCle, String dateDebut) throws Exception {
+        List<Projet> result = new ArrayList<>();
+        Fonction f= new Fonction();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            String sql = "SELECT * FROM Projet WHERE (NomProjet LIKE ? OR DescriptionProjet LIKE ?) AND (DateDebut = ? )";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + motCle + "%");
+            ps.setString(2, "%" + motCle + "%");
+            ps.setTimestamp(3,f.transform(dateDebut));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Projet projet = new Projet();
+                projet.setIdProjet(rs.getInt("idProjet"));
+                projet.setEtudiantidEtudiant(rs.getInt("EtudiantidEtudiant"));
+                projet.setNomProjet(rs.getString("NomProjet"));
+                projet.setDateDebut(rs.getTimestamp("DateDebut"));
+                projet.setDescriptionProjet(rs.getString("DescriptionProjet"));
+                projet.setDateFin(rs.getTimestamp("DateFin"));
+                result.add(projet);
+            }
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
 }
