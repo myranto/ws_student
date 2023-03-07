@@ -46,4 +46,12 @@ public class ProjetController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+ @GetMapping("/moyenne/{idetudiant}")
+    public ResponseEntity<Double> getmoyenneDurree(@PathVariable int idetudiant) throws Exception {
+        double result = pr.getMoyenneDurree(idetudiant);
+        return ResponseEntity.ok(result);
+    }
+
+
+
 }

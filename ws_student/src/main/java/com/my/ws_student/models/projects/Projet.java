@@ -293,4 +293,34 @@ public class Projet extends ObjectBDD {
         return durree;
     }
 
+ public double getMoyenneDurree(int idEtudiant) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double pourcentage = 0;
+        try {
+            con = Connexion.getConnection();
+            String query = "SELECT AVG(TempsPasse) AS temps_moyen FROM SousTache st INNER JOIN Tache t ON t.idTache = st.PlanningidTache INNER JOIN Projet p ON p.idProjet = t.ProjetidProjet INNER JOIN Etudiant e ON e.idEtudiant = p.EtudiantidEtudiant WHERE e.idEtudiant = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idEtudiant);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                pourcentage = rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return pourcentage;
+    }
+
 }
