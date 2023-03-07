@@ -21,7 +21,7 @@ public class Etudiant extends ObjectBDD {
     @KeyAnnotation
     private String Email;
     @KeyAnnotation
-    private String MotDePasse;
+    private String motdepasse;
     @KeyAnnotation
     private Date DateNaissance;
     @KeyAnnotation
@@ -40,7 +40,7 @@ public class Etudiant extends ObjectBDD {
         Nom = nom;
         Prenom = prenom;
         Email = email;
-        MotDePasse = motDePasse;
+        motdepasse = motDePasse;
         DateNaissance = dateNaissance;
         DateInscription = dateInscription;
         CarteEtudiant = carteEtudiant;
@@ -51,7 +51,7 @@ public class Etudiant extends ObjectBDD {
         Nom = nom;
         Prenom = prenom;
         Email = email;
-        MotDePasse = motDePasse;
+        motdepasse = motDePasse;
         DateNaissance = dateNaissance;
         DateInscription = dateInscription;
         CarteEtudiant = carteEtudiant;
@@ -89,12 +89,12 @@ public class Etudiant extends ObjectBDD {
         Email = email;
     }
 
-    public String getMotDePasse() {
-        return MotDePasse;
+    public String getMotdepasse() {
+        return motdepasse;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        MotDePasse = motDePasse;
+    public void setMotdepasse(String motdepasse) {
+        this.motdepasse = motdepasse;
     }
 
     public Date getDateNaissance() {
@@ -136,7 +136,7 @@ public class Etudiant extends ObjectBDD {
         try {
             Etudiant etu = new Etudiant();
             etu.setEmail(email);
-            etu.setMotDePasse(mdp);
+            etu.setMotdepasse(mdp);
             return  (Etudiant) etu.search(Connexion.getConnection()).get(0);
         }catch (Exception e){
             e.printStackTrace();
