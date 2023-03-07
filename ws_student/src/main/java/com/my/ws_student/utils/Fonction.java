@@ -14,4 +14,14 @@ public class Fonction {
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
         return timestamp;
     }
+
+ public boolean controleCommentaire(String commentaire) {
+        String[] insultes = {"con","connard", "salope", "merde", "enculé","stupide"};
+        for (String insulte : insultes) {
+            if (commentaire.matches("(?i).*\\b" + insulte + "\\b.*")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
