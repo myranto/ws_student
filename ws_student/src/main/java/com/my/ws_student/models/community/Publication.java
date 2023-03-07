@@ -11,7 +11,7 @@ import com.my.ws_student.utils.inter.TableAnnotation;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-
+@TableAnnotation
 public class Publication extends ObjectBDD {
     @KeyAnnotation
     @IdAnnotation(name = "idPublication")
@@ -28,7 +28,7 @@ public class Publication extends ObjectBDD {
     public Etudiant getEtudiant() {
         return etudiant;
     }
-
+//
     public void setEtudiant(Etudiant etudiant) {
         this.etudiant = etudiant;
     }
@@ -100,31 +100,19 @@ public class Publication extends ObjectBDD {
     }
     public Publication findById(int id) throws Exception {
         Publication e = findById(Connexion.getConnection(),String.valueOf(id));
-        init(e);
         return e;
     }
     public Publication save() throws Exception {
         Publication e = super.saveAll(Connexion.getConnection());
-        init(e);
         return e;
     }
     public ArrayList<Publication> SelectAll() throws Exception {
         ArrayList<Publication> list= super.SelectAll(Connexion.getConnection());
-//        initTable(list);
         return list;
     }
     public ArrayList<Publication> SelectAllByQuerry(String sql) throws Exception {
         ArrayList<Publication> list = SelectAllByQuery(Connexion.getConnection(),sql);
-        initTable(list);
         return list;
-    }
-    private void initTable(ArrayList<Publication> list) throws Exception {
-        for (Publication e:list) {
-            init(e);
-        }
-    }
-    private void init(Publication p) throws Exception {
-        p.getList_coms();
     }
 
 }

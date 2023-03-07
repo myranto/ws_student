@@ -123,17 +123,17 @@ public class Projet extends ObjectBDD {
 
     public Projet findById(int id) throws Exception {
         Projet e =  findById(Connexion.getConnection(),String.valueOf(id));
-        init(e);
+//        init(e);
         return e;
     }
     public Projet save() throws Exception {
         Projet e = super.saveAll(Connexion.getConnection());
-        init(e);
+//        init(e);
         return e;
     }
     public ArrayList<Projet> SelectAll() throws Exception {
         ArrayList<Projet> list =  super.SelectAll(Connexion.getConnection());
-        initTable(list);
+//        initTable(list);
         return list;
     }
     public ArrayList<Projet> SelectAllByQuerry(String sql) throws Exception {

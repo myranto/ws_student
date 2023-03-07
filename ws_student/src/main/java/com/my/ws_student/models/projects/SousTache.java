@@ -31,16 +31,16 @@ public class SousTache extends ObjectBDD {
     private int etat;
     @KeyAnnotation
     private int PlanningidTache;
-    @ForeignKeyAnnotation(name = "PlanningidTache",references = "idTache")
-    private Tache tache;
-
-    public Tache getTache() {
-        return tache;
-    }
-
-    public void setTache(Tache tache) {
-        this.tache = tache;
-    }
+//    @ForeignKeyAnnotation(name = "PlanningidTache",references = "idTache")
+//    private Tache tache;
+//
+//    public Tache getTache() {
+//        return tache;
+//    }
+//
+//    public void setTache(Tache tache) {
+//        this.tache = tache;
+//    }
 
     public SousTache() {
     }

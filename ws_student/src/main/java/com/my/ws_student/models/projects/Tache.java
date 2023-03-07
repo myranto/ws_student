@@ -181,35 +181,35 @@ public class Tache extends ObjectBDD {
     }
     public Tache findById(int id) throws Exception {
         Tache e = findById(Connexion.getConnection(),String.valueOf(id));
-        init(e);
+//        init(e);
         return e;
     }
     public Tache save() throws Exception {
         Tache e= super.saveAll(Connexion.getConnection());
-        init(e);
+//        init(e);
         return e;
     }
     public ArrayList<Tache> SelectByIdProject(int idProject) throws Exception {
         String sql = "select * from "+getNomTable()+" where ProjetidProjet="+idProject+" order by priorite desc";
         ArrayList<Tache> list = SelectAllByQuerry(sql);
-        initTable(list);
+//        initTable(list);
         return list;
     }
     public ArrayList<Tache> SelectAll() throws Exception {
         ArrayList<Tache> list = super.SelectAll(Connexion.getConnection());
-        initTable(list);
+//        initTable(list);
         return list;
     }
     public ArrayList<Tache> SelectAllByQuerry(String sql) throws Exception {
         ArrayList<Tache> list = SelectAllByQuery(Connexion.getConnection(),sql);
-        initTable(list);
+//        initTable(list);
         return list;
     }
     public Tache changeEtat(int etat,int idTache) throws Exception {
         Tache e = new Tache().findById(idTache);
         e.setEtat(etat);
         e.updateById(Connexion.getConnection());
-        init(e);
+//        init(e);
         return e;
     }
     private void initTable(ArrayList<Tache> list) throws Exception {
