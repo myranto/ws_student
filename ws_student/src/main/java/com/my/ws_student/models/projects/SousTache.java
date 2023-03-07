@@ -24,7 +24,7 @@ public class SousTache extends ObjectBDD {
     @KeyAnnotation
     private int estimation;
     @KeyAnnotation
-    private int TempsPasse;
+    private int TempsPasse=-1;
     @KeyAnnotation
     private int priorite;
     @KeyAnnotation
@@ -167,12 +167,25 @@ public class SousTache extends ObjectBDD {
         int h = (int) (t/60000);//en h
         return h*60;
     }
-    public SousTache changeEtat(int etat,int idSousTache) throws Exception {
+    public SousTache changeEtat(int etat,int idSousTache,int min) throws Exception {
         SousTache e = new SousTache().findById(idSousTache);
         e.setEtat(etat);
-        int min = e.CalculateTime(e.getDate_sous_tache());
+//        int min = e.CalculateTime(e.getDate_sous_tache());
         e.setTempsPasse(min);
         e.updateById(Connexion.getConnection());
         return e;
+    }
+//    public SousTache changeEtat(int etat,int idSousTache) throws Exception {
+//        SousTache e = new SousTache().findById(idSousTache);
+//        e.setEtat(etat);
+//        int min = e.CalculateTime(e.getDate_sous_tache());
+//        e.setTempsPasse(min);
+//        e.updateById(Connexion.getConnection());
+//        return e;
+//    }
+    public void update() throws Exception {
+        SousTache e = findById(getIdSousTache());
+        e  = new SousTache(e.getIdSousTache(), getTitreSousTache(), getDescription(), getDate_sous_tache(), getEstimation(), getTempsPasse(), getPriorite(), getEtat(), getPlanningidTache());
+        e.updateById(Connexion.getConnection());
     }
 }

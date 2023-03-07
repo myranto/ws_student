@@ -212,13 +212,10 @@ public class Tache extends ObjectBDD {
 //        init(e);
         return e;
     }
-    private void initTable(ArrayList<Tache> list) throws Exception {
-        for (Tache e:list) {
-            init(e);
-        }
-    }
-    private void init(Tache p) throws Exception {
-        p.getList_sousTache();
+    public void update() throws Exception {
+        Tache t = findById(getIdTache());
+        t = new Tache(t.getIdTache(), getIdEtudiant(), getDatePlanning(), getDurree(), getTitreTache(), getDescriptionTache(), getPriorite(), getRappel(), getEtat(), getProjetidProjet());
+        t.updateById(Connexion.getConnection());
     }
 
      public double getTachesTermineesPourcentage(int idProject) throws Exception {

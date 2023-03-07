@@ -302,7 +302,7 @@ public class ObjectBDD {
     public <T> ArrayList<T> search(Connection con) throws Exception {
         String sql = createQuery();
         System.out.println(sql);
-        return null;
-//        return SelectAllByQuery(con,sql);
+//        return null;
+        return SelectAllByQuery(con,sql);
     }
 }
