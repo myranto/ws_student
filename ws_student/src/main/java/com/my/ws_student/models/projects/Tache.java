@@ -218,16 +218,16 @@ public class Tache extends ObjectBDD {
         t.updateById(Connexion.getConnection());
     }
 
-     public double getTachesTermineesPourcentage(int idProject) throws Exception {
+     public double getSousTachesTermineesPourcentage(int idTache) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         double pourcentage = 0;
         try {
             con = Connexion.getConnection();
-            String query = "SELECT COUNT(DISTINCT idTache) FILTER (WHERE etat = 1) * 100.0 / COUNT(DISTINCT idTache) AS pourcentage_tache FROM Tache WHERE ProjetidProjet =?";
+            String query = "SELECT COUNT(*) FILTER (WHERE etat = 1) * 100.0 / COUNT(*) AS pourcentage_sous_tache FROM  SousTache  WHERE PlanningidTache=?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, idProject);
+            ps.setInt(1, idTache);
             rs = ps.executeQuery();
             if (rs.next()) {
                 pourcentage = rs.getDouble(1);
