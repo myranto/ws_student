@@ -29,6 +29,20 @@ public class Projet extends ObjectBDD {
     @ForeignKeyAnnotation(name = "EtudiantidEtudiant",references = "idEtudiant")
     private Etudiant etudiant;
     private ArrayList<Tache> list_tache = null;
+    private int estimationProject = -1;
+
+    public int getEstimationProject() throws Exception {
+        if (estimationProject == -1) {
+            for (Tache e:getList_tache()) {
+                estimationProject+=e.getDurree();
+            }
+        }
+        return estimationProject;
+    }
+
+    public void setEstimationProject(int estimationProject) {
+        this.estimationProject = estimationProject;
+    }
 
     public ArrayList<Tache> getList_tache() throws Exception {
         if (list_tache == null){
@@ -138,15 +152,11 @@ public class Projet extends ObjectBDD {
     }
     public ArrayList<Projet> SelectAllByQuerry(String sql) throws Exception {
         ArrayList<Projet> list = SelectAllByQuery(Connexion.getConnection(),sql);
-        initTable(list);
         return list;
     }
-    private void initTable(ArrayList<Projet> list) throws Exception {
-        for (Projet e:list) {
-            init(e);
-        }
-    }
-    private void init(Projet p) throws Exception {
-        p.getList_tache();
+    public void update() throws Exception {
+        Projet pr = findById(getIdProjet());
+        pr = new Projet(pr.getIdProjet(),getEtudiantidEtudiant(), getNomProjet(),getDateDebut(), getDescriptionProjet(), getDateFin());
+        pr.updateById(Connexion.getConnection());
     }
 }

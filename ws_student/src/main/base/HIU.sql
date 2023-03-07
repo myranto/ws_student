@@ -120,3 +120,39 @@ insert into Etudiant (Nom, Prenom, Email, MotDePasse, DateNaissance, DateInscrip
 insert into Publication(texte, DatePublication, EtudiantidEtudiant) VALUES ('za zany misy probleme eo am resaka deploiement react',current_timestamp,1);
 insert into Commentaire(PublicationidPublication, texte, DateCommentaire, EtudiantidEtudiant) values
 (1,'zao lesy ah,mandehana am netlify fa any mora deploiena',current_timestamp,2);
+
+INSERT INTO Etudiant (Nom, Prenom, Email, MotDePasse, DateNaissance, DateInscription, CarteEtudiant)
+VALUES ('Dupont', 'Jean', 'jean.dupont@mail.com', '123456', '2000-01-01', '2022-01-01', '12345');
+
+INSERT INTO BibliothequeEtudiant (EtudiantidEtudiant, NomDocument, TypeDocument, CheminDocument)
+VALUES (1, 'Document1', 'pdf', '/documents/document1.pdf');
+
+INSERT INTO PriseDeNotes (EtudiantidEtudiant, TitreNotes, ContenuNotes, image, mots_cles)
+VALUES (1, 'Notes de physique', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan tellus quis semper bibendum. Integer nec nibh feugiat, volutpat libero vitae, tempor ante. Nunc congue orci at metus tincidunt, nec tincidunt mi malesuada. ', 'image1.jpg', 'physique, formules');
+INSERT INTO Projet (EtudiantidEtudiant, NomProjet, DateDebut, DescriptionProjet, DateFin)
+VALUES (1, 'Projet de physique', '2022-02-01 00:00:00', 'Projet de recherche sur la physique quantique', '2022-06-30 00:00:00');
+
+INSERT INTO Tache (idEtudiant, DatePlanning, Durree, TitreTache, DescriptionTache, priorite, rappel, etat, ProjetidProjet)
+VALUES (1, '2022-03-10 14:30:00', 2, 'Réunion projet', 'Réunion pour discuter des avancées sur le projet', 1, NULL, 0, 1);
+
+
+INSERT INTO SousTache (TitreSousTache, Description, Date_sous_tache, estimation, TempsPasse, priorite, etat, PlanningidTache)
+VALUES ('Recherches bibliographiques', 'Recherche de publications sur le sujet du projet', '2022-02-05 00:00:00', 3, 2, 2, 1, 1);
+
+INSERT INTO Pomodoro (DateDebut, Durree, Pause)
+VALUES ('2022-03-07 09:00:00', 25, 5);
+
+INSERT INTO Etudiant_Pomodoro (EtudiantidEtudiant, PomodoroidPomodoro, SousTacheidSousTache, DateFin)
+VALUES (1, 1, 1, '2022-03-07 09:30:00');
+
+INSERT INTO Publication (texte, DatePublication, EtudiantidEtudiant)
+VALUES ('Bonjour tout le monde', '2022-03-07 10:00:00', 1);
+
+INSERT INTO Commentaire (PublicationidPublication, texte, DateCommentaire, EtudiantidEtudiant)
+VALUES (2, 'Salut !', '2022-03-07 10:01:00', 2);
+
+INSERT INTO note_coms (idCommentaire, notes, idEtudiant)
+VALUES (1, 4, 1);
+
+INSERT INTO FichierPartager (CommentaireidCommentaire, FichierPartager)
+VALUES (1, '/fichiers/fichier1.pdf');

@@ -146,6 +146,11 @@ public class Commentaire extends ObjectBDD {
 //        initTable(list);
         return list;
     }
+    public void update() throws Exception {
+        Commentaire coms = findById(getIdCommentaire());
+        coms.setTexte(getTexte());
+         coms.updateById(Connexion.getConnection());
+    }
 
 
 }

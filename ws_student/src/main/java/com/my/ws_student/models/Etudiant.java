@@ -6,6 +6,7 @@ import com.my.ws_student.utils.inter.IdAnnotation;
 import com.my.ws_student.utils.inter.KeyAnnotation;
 import com.my.ws_student.utils.inter.TableAnnotation;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -143,8 +144,7 @@ public class Etudiant extends ObjectBDD {
             throw new Exception("email or password incorrect for email :"+email);
         }
     }
-
-    public static void main(String[] args) throws Exception {
-        Etudiant e = new Etudiant().login("ncakc","imdw");
-    }
+//    public static void main(String[] args) throws Exception {
+//        Etudiant e = new Etudiant().login("ncakc","imdw");
+//    }
 }
