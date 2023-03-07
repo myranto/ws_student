@@ -232,4 +232,65 @@ public class Projet extends ObjectBDD {
         return result;
     }
 
+
+    public int getDurreeEstimationProjet(int idProject) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int durree = 0;
+        try {
+            con = Connexion.getConnection();
+            String query ="SELECT SUM(Tache.Durree) as duree_totale from Tache where projetidprojet  =?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idProject);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                durree = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return durree;
+    }
+
+    public int getDurreeProjet(int idProject) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int durree = 0;
+        try {
+            con = Connexion.getConnection();
+            String query ="SELECT SUM(sousTache.TempsPasse) AS duree_passee_total FROM projet join Tache on projet.idprojet=Tache.projetidprojet JOIN SousTache ON Tache.idTache = SousTache.PlanningidTache WHERE projet.idProjet =?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idProject);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                durree = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return durree;
+    }
+
 }

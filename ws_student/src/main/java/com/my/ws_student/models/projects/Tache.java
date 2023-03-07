@@ -289,4 +289,38 @@ public class Tache extends ObjectBDD {
         }
         return result;
     }
+
+  public int[] getDureeTache(int idTache) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int dureeEstimee = 0;
+        int dureePassee = 0;
+        try {
+            con = Connexion.getConnection();
+            String query = "SELECT SUM(estimation) AS duree_estimee, SUM(TempsPasse) AS duree_passee FROM SousTache WHERE PlanningidTache = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idTache);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                dureeEstimee = rs.getInt("duree_estimee");
+                dureePassee = rs.getInt("duree_passee");
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return new int[] {dureeEstimee, dureePassee};
+    }
+
+
 }

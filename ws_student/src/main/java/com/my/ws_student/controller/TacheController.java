@@ -15,18 +15,33 @@ import java.util.List;
 @CrossOrigin(methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
 public class TacheController {
 
+ 
     Tache t = new Tache();
 
     @GetMapping("/pourcentage/{id}")
-    public double getPourcentageTache(@PathVariable int id) throws Exception {
+    public ResponseEntity<Map<String, Double>> getPourcentageTache(@PathVariable int id) throws Exception {
         double result = t.getSousTachesTermineesPourcentage(id);
-        return result;
+        Map<String, Double> response = new HashMap<>();
+        response.put("pourcentageTermine", result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PostMapping("/recherche")
     public ResponseEntity<List<Object[]>> recherche(@RequestParam("motcle") String motcle, @RequestParam("dateplanning") String dateplanning) throws Exception
     {
         return new ResponseEntity<List<Object[]>>(t.rechercheParMotCle(motcle,dateplanning),HttpStatus.OK);
     }
+
+    @GetMapping("/durree/{id}")
+    public ResponseEntity<Map<String, Integer>> getDureeTache(@PathVariable int id) throws Exception {
+        int[] result = t.getDureeTache(id);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("dureeEstimee", result[0]);
+        response.put("dureePassee", result[1]);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 
 }
