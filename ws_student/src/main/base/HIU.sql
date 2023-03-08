@@ -100,6 +100,31 @@ create table note_coms(
 CREATE TABLE FichierPartager (
   CommentaireidCommentaire int NOT NULL,
   FichierPartager          text NOT NULL);
+
+
+CREATE TABLE ProfilEtudiant(
+idprofiletudiant serial primary key,
+idEtudiant int references Etudiant(idEtudiant),
+domaine_etude text,
+profil text,
+competences text,
+experience int
+);
+
+
+CREATE TABLE OffreStage(
+idoffrestage serial primary key,
+nom_entreprise VARCHAR(255) NOT NULL,
+poste VARCHAR(255) NOT NULL,
+description_stage TEXT NOT NULL,
+exigences TEXT NOT NULL,
+localisation VARCHAR(255) NOT NULL,
+date_debut DATE NOT NULL,
+date_fin DATE NOT NULL,
+info_contact VARCHAR(255) NOT NULL,
+lien text
+);
+
 ALTER TABLE BibliothequeEtudiant ADD CONSTRAINT FKBibliotheq508354 FOREIGN KEY (EtudiantidEtudiant) REFERENCES Etudiant (idEtudiant);
 ALTER TABLE PriseDeNotes ADD CONSTRAINT FKPriseDeNot507607 FOREIGN KEY (EtudiantidEtudiant) REFERENCES Etudiant (idEtudiant);
 ALTER TABLE Projet ADD CONSTRAINT FKProjet106811 FOREIGN KEY (EtudiantidEtudiant) REFERENCES Etudiant (idEtudiant);
