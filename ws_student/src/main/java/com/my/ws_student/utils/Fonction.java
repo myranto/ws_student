@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.my.ws_student.utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -13,15 +13,5 @@ public class Fonction {
         Date parsedDate = format.parse(dateString);
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
         return timestamp;
-    }
-
- public boolean controleCommentaire(String commentaire) {
-        String[] insultes = {"con","connard", "salope", "merde", "enculé","stupide"};
-        for (String insulte : insultes) {
-            if (commentaire.matches("(?i).*\\b" + insulte + "\\b.*")) {
-                return true;
-            }
-        }
-        return false;
     }
 }

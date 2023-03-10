@@ -1,16 +1,12 @@
-package com.example.demo.controller;
+package com.my.ws_student.controller;
 
-import com.example.demo.models.community.Commentaire;
-import com.example.demo.models.community.Note_coms;
-import com.example.demo.models.community.Publication;
-import com.example.demo.models.projects.Projet;
-import com.example.demo.models.projects.Tache;
-import com.example.demo.utils.Fonction;
-import com.example.demo.utils.ToJsonData;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.my.ws_student.models.community.Commentaire;
+import com.my.ws_student.models.community.Note_coms;
+import com.my.ws_student.models.community.Publication;
+import com.my.ws_student.models.projects.Projet;
+import com.my.ws_student.models.projects.SousTache;
+import com.my.ws_student.models.projects.Tache;
+import com.my.ws_student.utils.ToJsonData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,33 +25,17 @@ public class PublicationController {
     @PostMapping("/create")
     public ResponseEntity<ToJsonData> createPublication(@RequestBody Publication pub){
         try {
-            Fonction f = new Fonction();
-                 String texte = pub.getTexte();
-                 if(f.controleCommentaire(texte))
-                 {
-                     return new ResponseEntity<>(new ToJsonData<>(null,"commentaire innaceptable"), HttpStatus.UNAUTHORIZED);
-                 }
-                 else {
-                     Publication p = pub.save();
-                     return new ResponseEntity<>(new ToJsonData<>("create with success",null), HttpStatus.OK);
-                 }
-
+                 Publication p = pub.save();
+            return new ResponseEntity<>(new ToJsonData<>("create with success",null), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ToJsonData<>(null,e.getMessage()), HttpStatus.UNAUTHORIZED);
         }
     }
     @PostMapping("/commentaire/{action}")
-    public ResponseEntity<ToJsonData> createCommentary(@RequestBody Commentaire coms, @PathVariable("action") String action){
+    public ResponseEntity<ToJsonData> createCommentary(@RequestBody Commentaire coms,@PathVariable("action") String action){
         try {
-            Fonction f = new Fonction();
             if (action.equals("create"))
-                if (f.controleCommentaire(coms.getTexte()))
-                {
-                    return new ResponseEntity<>(new ToJsonData<>("commentaire innacceptable",null), HttpStatus.UNAUTHORIZED);
-                }
-                else {
-                    coms.save();
-                }
+                coms.save();
             else if(action.equals("update"))
                 coms.update();
             else

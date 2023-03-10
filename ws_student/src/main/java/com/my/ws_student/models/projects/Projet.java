@@ -3,13 +3,18 @@ package com.my.ws_student.models.projects;
 import com.my.ws_student.models.Etudiant;
 import com.my.ws_student.utils.Connex.Connexion;
 import com.my.ws_student.utils.DAO.ObjectBDD;
+import com.my.ws_student.utils.Fonction;
 import com.my.ws_student.utils.inter.ForeignKeyAnnotation;
 import com.my.ws_student.utils.inter.IdAnnotation;
 import com.my.ws_student.utils.inter.KeyAnnotation;
 import com.my.ws_student.utils.inter.TableAnnotation;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @TableAnnotation
 public class Projet extends ObjectBDD {
@@ -230,97 +235,6 @@ public class Projet extends ObjectBDD {
             }
         }
         return result;
-    }
-
-
-    public int getDurreeEstimationProjet(int idProject) throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int durree = 0;
-        try {
-            con = Connexion.getConnection();
-            String query ="SELECT SUM(Tache.Durree) as duree_totale from Tache where projetidprojet  =?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, idProject);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                durree = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return durree;
-    }
-
-    public int getDurreeProjet(int idProject) throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int durree = 0;
-        try {
-            con = Connexion.getConnection();
-            String query ="SELECT SUM(sousTache.TempsPasse) AS duree_passee_total FROM projet join Tache on projet.idprojet=Tache.projetidprojet JOIN SousTache ON Tache.idTache = SousTache.PlanningidTache WHERE projet.idProjet =?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, idProject);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                durree = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return durree;
-    }
-
- public double getMoyenneDurree(int idEtudiant) throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        double pourcentage = 0;
-        try {
-            con = Connexion.getConnection();
-            String query = "SELECT AVG(TempsPasse) AS temps_moyen FROM SousTache st INNER JOIN Tache t ON t.idTache = st.PlanningidTache INNER JOIN Projet p ON p.idProjet = t.ProjetidProjet INNER JOIN Etudiant e ON e.idEtudiant = p.EtudiantidEtudiant WHERE e.idEtudiant = ?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, idEtudiant);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                pourcentage = rs.getDouble(1);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return pourcentage;
     }
 
 }

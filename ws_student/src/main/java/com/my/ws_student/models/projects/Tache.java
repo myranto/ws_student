@@ -4,13 +4,18 @@ import com.my.ws_student.models.Etudiant;
 import com.my.ws_student.models.community.Publication;
 import com.my.ws_student.utils.Connex.Connexion;
 import com.my.ws_student.utils.DAO.ObjectBDD;
+import com.my.ws_student.utils.Fonction;
 import com.my.ws_student.utils.inter.ForeignKeyAnnotation;
 import com.my.ws_student.utils.inter.IdAnnotation;
 import com.my.ws_student.utils.inter.KeyAnnotation;
 import com.my.ws_student.utils.inter.TableAnnotation;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @TableAnnotation
 public class Tache extends ObjectBDD {
@@ -218,16 +223,16 @@ public class Tache extends ObjectBDD {
         t.updateById(Connexion.getConnection());
     }
 
-     public double getSousTachesTermineesPourcentage(int idTache) throws Exception {
+     public double getSousTachesTermineesPourcentage(int idProject) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         double pourcentage = 0;
         try {
             con = Connexion.getConnection();
-            String query = "SELECT COUNT(*) FILTER (WHERE etat = 1) * 100.0 / COUNT(*) AS pourcentage_sous_tache FROM  SousTache  WHERE PlanningidTache=?";
+            String query = "SELECT COUNT(DISTINCT idTache) FILTER (WHERE etat = 1) * 100.0 / COUNT(DISTINCT idTache) AS pourcentage_tache FROM Tache WHERE ProjetidProjet =?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, idTache);
+            ps.setInt(1, idProject);
             rs = ps.executeQuery();
             if (rs.next()) {
                 pourcentage = rs.getDouble(1);
@@ -289,38 +294,4 @@ public class Tache extends ObjectBDD {
         }
         return result;
     }
-
-  public int[] getDureeTache(int idTache) throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int dureeEstimee = 0;
-        int dureePassee = 0;
-        try {
-            con = Connexion.getConnection();
-            String query = "SELECT SUM(estimation) AS duree_estimee, SUM(TempsPasse) AS duree_passee FROM SousTache WHERE PlanningidTache = ?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, idTache);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                dureeEstimee = rs.getInt("duree_estimee");
-                dureePassee = rs.getInt("duree_passee");
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return new int[] {dureeEstimee, dureePassee};
-    }
-
-
 }
